@@ -73,4 +73,44 @@ class qSandbox_API {
 
         return $res;
     }
+    
+    /**
+     *
+     */
+    public function get_demo_setups( $key ) {
+        $res = new qSandbox_Result();
+
+        $url = $this->api_end_point . '/demo_setups/list';
+
+        $response = wp_remote_post( $url, array(
+                'method' => 'POST',
+                'timeout' => 45,
+                'redirection' => 5,
+                'httpversion' => '1.0',
+                'blocking' => true,
+                'headers' => array(),
+                'body' => array( 'api_key' => $key, 'password' => '' ),
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            $error_message = $response->get_error_message();
+            $res->msg( $error_message );
+        } elseif ( !empty ( $response['body'] ) ) {
+            $json = json_decode( $response['body'], true );
+
+            if ( empty( $json ) ) {
+                $res->msg( 'Cannot parse response from the server.' );
+            } elseif ( ! empty( $json['status'] ) ) {
+                $res->status( $json['status'] );
+            } else {
+                $res->msg( $json['msg'] );
+            }
+
+            $res->data( 'json', $json );
+            $res->data( 'raw_body', $response['body'] );
+        }
+
+        return $res;
+    }
 }
