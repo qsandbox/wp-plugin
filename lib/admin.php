@@ -142,6 +142,20 @@ class qSandbox_Admin {
      */
     public function render_settings_page() {
         $opts = $this->get_options();
+        
+        $api_key_notice = '';
+
+        if ( ! empty( $opts['api_key'] ) ) {
+            $api_obj = qSandbox_API::get_instance();
+            $result_obj = $api_obj->verify_key( $opts['api_key'] );
+
+            if ( $result_obj->isSuccess() ) {
+                $api_key_notice = 'The key is valid';
+            } else {
+                $api_key_notice = 'The key is NOT valid.';
+                $api_key_notice .= $result_obj->msg();
+            }
+        }
     ?>
         <!--<h2><?php //esc_attr_e( '2 Columns Layout: static (px)', 'qsandbox' ); ?></h2>-->
 
@@ -180,6 +194,7 @@ class qSandbox_Admin {
                                                             value="<?php echo esc_attr($opts['api_key']); ?>" />
                                                         [ <a href='http://qsandbox.com/app/account-api.php' target="_blank"> Get the API key</a> ]
                                                     </label>
+                                                    <p><?php echo $api_key_notice; ?> </p>
                                                 </td>
                                             </tr>
                                             
