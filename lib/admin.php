@@ -150,7 +150,7 @@ class qSandbox_Admin {
             $result_obj = $api_obj->verify_key( $opts['api_key'] );
 
             if ( $result_obj->isSuccess() ) {
-                $api_key_notice = 'The key is valid';
+                $api_key_notice = 'The API key is valid.';
             } else {
                 $api_key_notice = 'The key is NOT valid.';
                 $api_key_notice .= $result_obj->msg();
