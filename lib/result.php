@@ -35,7 +35,9 @@ class qSandbox_Result {
     }
 
     public function data($records = null) {
-        if (!is_null($records)) {
+        if ( ! empty( $value ) ) {
+            $this->data[ $key_or_records ] = $value;
+        } elseif ( ! is_null( $records ) ) {
             $this->data = $records;
         }
 
