@@ -150,9 +150,11 @@ class qSandbox_Admin {
             $result_obj = $api_obj->verify_key( $opts['api_key'] );
 
             if ( $result_obj->isSuccess() ) {
-                $api_key_notice = 'The API key is valid.';
+                $api_key_notice .= $result_obj->msg();
+                $setups_result_obj = $api_obj->get_demo_setups( $opts['api_key'] );
+
+                $api_key_notice .= var_export($setups_result_obj, 1 );
             } else {
-                $api_key_notice = 'The key is NOT valid.';
                 $api_key_notice .= $result_obj->msg();
             }
         }
@@ -189,12 +191,12 @@ class qSandbox_Admin {
                                                 <th scope="row"><?php _e( 'API Key', 'qsandbox' ) ?></th>
                                                 <td>
                                                     <label for="qsandbox_options_api_key">
-                                                        <input type="text" id="qsandbox_options_api_key" class="regular-text"
+                                                        <input type="text" id="qsandbox_options_api_key" class="widefat"
                                                                name="qsandbox_options[api_key]"
                                                             value="<?php echo esc_attr($opts['api_key']); ?>" />
-                                                        [ <a href='http://qsandbox.com/app/account-api.php' target="_blank"> Get the API key</a> ]
                                                     </label>
-                                                    <p><?php echo $api_key_notice; ?> </p>
+                                                    <a href='http://qsandbox.com/app/account-api.php' target="_blank"> Get/regenerate the API key</a>
+                                                    <p> <?php echo $api_key_notice; ?> </p>
                                                 </td>
                                             </tr>
                                             
