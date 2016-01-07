@@ -63,6 +63,7 @@ class qSandbox_API {
                 $res->msg( 'Cannot parse response from the server.' );
             } elseif ( ! empty( $json['status'] ) ) {
                 $res->status( $json['status'] );
+                $res->msg( $json['msg'] );
             } else {
                 $res->msg( $json['msg'] );
             }
@@ -96,13 +97,15 @@ class qSandbox_API {
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
             $res->msg( $error_message );
-        } elseif ( !empty ( $response['body'] ) ) {
+        } elseif ( ! empty ( $response['body'] ) ) {
             $json = json_decode( $response['body'], true );
 
             if ( empty( $json ) ) {
                 $res->msg( 'Cannot parse response from the server.' );
             } elseif ( ! empty( $json['status'] ) ) {
                 $res->status( $json['status'] );
+                
+                $res->data( 'items', $json['data']['items'] );
             } else {
                 $res->msg( $json['msg'] );
             }
