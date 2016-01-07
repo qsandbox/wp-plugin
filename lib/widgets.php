@@ -109,7 +109,7 @@ class qSandbox_Widget extends WP_Widget {
           <textarea class="widefat" id="<?php echo $this->get_field_id('demo_instr'); ?>"
                     name="<?php echo $this->get_field_name('demo_instr'); ?>" rows="3"><?php echo $demo_instr; ?></textarea>
             <div>
-              Some HTML allowed <?php echo htmlentities( $this->allowed_tags_str ); ?>
+              HTML allowed as well <?php echo htmlentities( $this->allowed_tags_str ); ?>
             </div>
         </p>
         <p class="submit_button_wrapper">
