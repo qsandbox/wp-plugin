@@ -29,7 +29,7 @@ The demo site expires after certain amount of time.
 1. Add the API key in the qSandbox plugin's settings page ( WP Admin > Settings > qSandbox )
 1. Go to Appearance > Widgets and add the *qSandbox Demo Site Widget* to a your sidebar or footer and select the demo setup (if you have more than 1)
 1. Save changes and view your site.
-1. Click on the *Go!* button and in a few seconds the demo should be up and running.
+1. Click on the *Go!* button and in a few seconds you will see a brand new demo site with all the selected themes and plugins preinstalled.
 
 This plugin will register a widget that will communicate with qSandbox.com and will simplify the temporary demo site creation.
 
