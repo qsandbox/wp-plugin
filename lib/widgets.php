@@ -37,8 +37,22 @@ class qSandbox_Widget extends WP_Widget {
         $demo_instr  = $instance['demo_instr'];
         $dmo_btn_cta = $instance['dmo_btn_cta'];
         $demo_setup_id = $instance['demo_setup_id'];
-        
+
+        $api_instance = qSandbox_API::get_instance();
+        $url = $api_instance->get_api_server_url();
+        $api_path = '/app/ajax.php?cmd=demo.setup';
+
+        $cfg = array(
+            'demo_setup_end_point' => $url . $api_path,
+        );
+
+        $cfg_json = json_encode( $cfg );
 		?>
+
+        <script>
+            var qsandbox_cfg = <?php echo $cfg_json; ?>;
+        </script>
+        
         <div id='qsandbox_demo_setup_form_wrapper' class='qsandbox_demo_setup_form_wrapper'>
             <?php echo $before_widget; ?>
 

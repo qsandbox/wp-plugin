@@ -34,6 +34,22 @@ class qSandbox_API {
         return $instance;
     }
 
+    public function get_api_server() {
+        return parse_url( $this->api_end_point, PHP_URL_HOST );
+    }
+
+    /**
+     * Set up ssl.
+     * @return str
+     */
+    public function get_api_server_url() {
+        return 'http://' . $this->get_api_server();
+    }
+
+    public function get_api_endpoint() {
+        return $this->api_end_point;
+    }
+
     /**
      * 
      */
