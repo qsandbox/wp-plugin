@@ -2,6 +2,37 @@
 
 class qSandbox_Util {
     /**
+     * qSandbox_Util::array2dropdown_array();
+     * ID -> Label
+     * @param array $recordsArray
+     * @return array
+     */
+    public static function array2dropdown_array( $records, $flags = 0 ) {
+        $dropdown_elements = array();
+
+        foreach ( $records as $item ) {
+            // @todo if the id field doesn't exist preg_grep on keys to see what looks like an id and then use it's value.
+            // cases such as d_id, or u_id etc.
+            $id = empty( $item['id'] ) ? 0 : (int) $item['id'];
+            $title = 'n/a';
+
+            if ( ! empty( $item[ 'title' ] ) ) {
+                $title = $item[ 'title' ];
+            } elseif ( ! empty( $item[ 'label' ] ) ) {
+                $title = $item[ 'label' ];
+            } else {
+                $title = $item['id'];
+            }
+
+            $title .= sprintf( ' [ID: %d]', $item['id'] );
+
+            $dropdown_elements[ $id ] = $title;
+        }
+
+        return $dropdown_elements;
+    }
+
+    /**
      * generates HTML select
      * qSandbox_Util::html_select()
      * @param type $name
