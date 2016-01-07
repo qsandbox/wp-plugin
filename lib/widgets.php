@@ -36,7 +36,8 @@ class qSandbox_Widget extends WP_Widget {
         $title 		 = apply_filters( 'widget_title', $instance['title'] );
         $demo_instr  = $instance['demo_instr'];
         $dmo_btn_cta = $instance['dmo_btn_cta'];
-
+        $demo_setup_id = $instance['demo_setup_id'];
+        
 		?>
         <div id='qsandbox_demo_setup_form_wrapper' class='qsandbox_demo_setup_form_wrapper'>
             <?php echo $before_widget; ?>
@@ -54,8 +55,8 @@ class qSandbox_Widget extends WP_Widget {
             ?>
 
             <form id='qsandbox_demo_setup_form' class='qsandbox_demo_setup_form' method="post">
-                <input type="hidden" name='demo_setup' value="yahoo!" />
-                <input id='demo_setup' class='demo_setup' name='demo_setup' type="submit" value="<?php echo $dmo_btn_cta; ?>" />
+                <input type="hidden" name='setup_id' value="<?php echo $demo_setup_id; ?>" />
+                <input id='demo_setup' class='demo_setup' type="submit" value="<?php echo $dmo_btn_cta; ?>" />
                 <div class='result'></div>
             </form>
             <?php echo $after_widget; ?>
@@ -71,8 +72,31 @@ class qSandbox_Widget extends WP_Widget {
 	public function form( $instance ) {
         $title 		= esc_attr( $instance['title'] );
         $demo_instr	= esc_attr( $instance['demo_instr'] );
-        $dmo_btn_cta	= esc_attr( empty( $instance['dmo_btn_cta'] ) ? 'Setup Demo' : $instance['dmo_btn_cta'] );
+        $dmo_btn_cta	= esc_attr( empty( $instance[ 'dmo_btn_cta' ] ) ? 'Setup Demo' : $instance[ 'dmo_btn_cta' ] );
+        $demo_setup_id	= empty( $instance[ 'demo_setup_id' ] ) ? 0 : (int) $instance[ 'demo_setup_id' ];
+
+        $qs_admin = qSandbox_Admin::get_instance();
+        $opts = $qs_admin->get_options();
+
+        $api_obj = qSandbox_API::get_instance();
+        $setups_result_obj = $api_obj->get_demo_setups( $opts['api_key'] );
+
+        $dropdown_elements = qSandbox_Util::array2dropdown_array( $setups_result_obj->data( 'items' ) );
+
+        // if present we'll use it otherwise we'll default to the first element's ID.
+        $sel_demo_id = empty( $demo_setup_id ) ? array_shift( array_keys( $dropdown_elements ) ) : $sel_demo_id;
         ?>
+        <p>
+          <label for="<?php echo $this->get_field_id( 'demo_setup_id' ); ?>"><?php _e( 'Demo Setup:' ); ?></label>
+          <?php
+            echo qSandbox_Util::html_select(
+                $this->get_field_name( 'demo_setup_id' ),
+                $sel_demo_id,
+                $dropdown_elements,
+                sprintf( 'id="%s"', $this->get_field_id( 'demo_setup_id' ) )
+            );
+           ?>
+        </p>
         <p>
           <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
           <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
@@ -109,6 +133,7 @@ class qSandbox_Widget extends WP_Widget {
 		$instance['title'] = trim( strip_tags( $new_instance['title'], $this->allowed_tags_str ) );
 		$instance['demo_instr'] = trim( strip_tags( $new_instance['demo_instr'], $this->allowed_tags_str ) );
 		$instance['dmo_btn_cta'] = trim( strip_tags( $new_instance['dmo_btn_cta'], $this->allowed_tags_str ) );
+		$instance['demo_setup_id'] = (int) trim( strip_tags( $new_instance['demo_setup_id'] ) );
         
         return $instance;
 	}
