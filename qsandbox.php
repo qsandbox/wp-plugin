@@ -30,6 +30,7 @@ define( 'QSANDBOX_PLUGIN_FILE', __FILE__ );
 require_once( dirname( __FILE__ ) . '/lib/bootstrap.php' );
 require_once( dirname( __FILE__ ) . '/lib/widgets.php' );
 require_once( dirname( __FILE__ ) . '/lib/api.php' ); // should I check for is admin ?
+require_once( dirname( __FILE__ ) . '/lib/util.php' ); // should I check for is admin ?
 require_once( dirname( __FILE__ ) . '/lib/admin.php' ); // should I check for is admin ?
 require_once( dirname( __FILE__ ) . '/lib/result.php' ); // should I check for is admin ?
 
