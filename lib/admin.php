@@ -153,7 +153,14 @@ class qSandbox_Admin {
                 $api_key_notice .= $result_obj->msg();
                 $setups_result_obj = $api_obj->get_demo_setups( $opts['api_key'] );
 
-                $api_key_notice .= var_export($setups_result_obj, 1 );
+                $dropdown_elements = qSandbox_Util::array2dropdown_array( $setups_result_obj->data( 'items' ) );
+
+                if ( ! empty( $dropdown_elements ) ) {
+                    $api_key_notice .= "<hr/>\n";
+                    $api_key_notice .= "Setup(s) found: <br/>";
+                    $api_key_notice .= join( "<br/>\n", $dropdown_elements );
+                    $api_key_notice .= "<hr/>\n";
+                }
             } else {
                 $api_key_notice .= $result_obj->msg();
             }
