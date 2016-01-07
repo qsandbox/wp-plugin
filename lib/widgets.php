@@ -107,9 +107,12 @@ class qSandbox_Widget extends WP_Widget {
           <label for="<?php echo $this->get_field_id('demo_instr'); ?>"><?php _e('Demo Instructions'); ?></label>
 
           <textarea class="widefat" id="<?php echo $this->get_field_id('demo_instr'); ?>"
-                    name="<?php echo $this->get_field_name('demo_instr'); ?>" rows="3"><?php echo $demo_instr; ?></textarea>
+                    name="<?php echo $this->get_field_name('demo_instr'); ?>"
+                    rows="3"
+                    placeholder="Try our cool themes."
+                    ><?php echo $demo_instr; ?></textarea>
             <div>
-              HTML allowed as well <?php echo htmlentities( $this->allowed_tags_str ); ?>
+              Text and HTML allowed <?php echo htmlentities( $this->allowed_tags_str ); ?>
             </div>
         </p>
         <p class="submit_button_wrapper">
