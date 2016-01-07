@@ -72,7 +72,7 @@ class qSandbox_Widget extends WP_Widget {
 	public function form( $instance ) {
         $title 		= esc_attr( $instance['title'] );
         $demo_instr	= esc_attr( $instance['demo_instr'] );
-        $dmo_btn_cta	= esc_attr( empty( $instance[ 'dmo_btn_cta' ] ) ? 'Setup Demo' : $instance[ 'dmo_btn_cta' ] );
+        $dmo_btn_cta	= esc_attr( empty( $instance[ 'dmo_btn_cta' ] ) ? 'Go!' : $instance[ 'dmo_btn_cta' ] );
         $demo_setup_id	= empty( $instance[ 'demo_setup_id' ] ) ? 0 : (int) $instance[ 'demo_setup_id' ];
 
         $qs_admin = qSandbox_Admin::get_instance();
